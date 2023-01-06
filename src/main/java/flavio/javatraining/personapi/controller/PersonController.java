@@ -1,16 +1,26 @@
 package flavio.javatraining.personapi.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import flavio.javatraining.personapi.model.Person;
+import flavio.javatraining.personapi.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api/v1/people")
 public class PersonController {
-    @GetMapping
-    public String getBook(){
-        return "API Test";
+
+    private PersonRepository personRepository;
+
+    @Autowired
+    public PersonController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
+
+    @PostMapping
+    public String createPerson(@RequestBody Person person){
+       Person personSave = personRepository.save(person);
+        return "Teste API";
     }
 
 }
